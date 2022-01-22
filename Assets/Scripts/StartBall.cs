@@ -35,11 +35,11 @@ public class StartBall : MonoBehaviour
         
 
         Debug.Log("Hit the bat from Ball Collider");
-        Rigidbody rigidbat = other.gameObject.GetComponent<Rigidbody>();
-        Debug.Log(rigidbat.velocity);
-        newForce = theBatForceMultiplicator * rigidbat.velocity.magnitude * newForce.normalized + newForce;
+        var rigidbat = other.gameObject.GetComponent<Bat>();
+        Debug.Log(rigidbat.ObjVelocity+rigidbat.AngVelocity);
+        newForce = theBatForceMultiplicator * (rigidbat.ObjVelocity.magnitude+rigidbat.AngVelocity.magnitude)* newForce.normalized + newForce;
         rigidbody.velocity = newForce;
-
+        Debug.Log("The force vector is " + newForce + "the magnitude is =" + newForce.magnitude);
         //rigidball.AddForce(-startForce,ForceMode.Impulse);
         //var colliderGameObject = other.collider.gameObject;
         // colliderGameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * 10000f, ForceMode.Impulse);
