@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StartBall : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject onHitEffect;
     public Vector3 startForce;
     private bool ballHit = false;
     private string hitobject;
@@ -26,14 +27,14 @@ public class StartBall : MonoBehaviour
         hitobject = other.gameObject.name;
         if (hitobject != "BatBlade") return;
 
+       
         var newForce = rigidbody.velocity;
-       // rigidbody.velocity = Vector3.zero;
         var normal = other.contacts[0].normal;
+        var go = Instantiate(onHitEffect, other.transform);
+        go.transform.position = other.contacts[0].point;
 
         newForce = 2 * (Vector3.Dot(rigidbody.velocity, Vector3.Normalize(normal))) * Vector3.Normalize(normal) - rigidbody.velocity; 
         newForce *= -1*theBallForceMultiplicator;
-        
-
         Debug.Log("Hit the bat from Ball Collider");
         var rigidbat = other.gameObject.GetComponent<Bat>();
         Debug.Log(rigidbat.ObjVelocity+rigidbat.AngVelocity);
