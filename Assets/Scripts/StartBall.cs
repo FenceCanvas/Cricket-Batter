@@ -8,15 +8,16 @@ public class StartBall : MonoBehaviour
     public Vector3 startForce;
     private bool ballHit = false;
     private string hitobject;
+    Rigidbody rigidbody;
+    public float theBallForceMultiplicator = 1f;
+    public float theBatForceMultiplicator = 1f;
    // public GameObject ball;
-    // Start is called before the first frame update
+   // Start is called before the first frame update
     void Start()
     {
      // Vector3 speed = new Vector3(startForce,0,0);
-      Rigidbody rigidbody = GetComponent<Rigidbody>();
-      rigidbody.AddForce(startForce,ForceMode.Impulse);
-       
-        
+      rigidbody = GetComponent<Rigidbody>();
+      rigidbody.AddForce(startForce,ForceMode.Impulse);   
     }
 
     private void OnCollisionEnter(Collision other)
@@ -24,19 +25,24 @@ public class StartBall : MonoBehaviour
         //Debug.Log(other.gameObject.name);
         hitobject = other.gameObject.name;
         if (hitobject != "BatBlade") return;
+
+        var newForce = rigidbody.velocity;
+       // rigidbody.velocity = Vector3.zero;
+        var normal = other.contacts[0].normal;
+
+        newForce = 2 * (Vector3.Dot(rigidbody.velocity, Vector3.Normalize(normal))) * Vector3.Normalize(normal) - rigidbody.velocity; 
+        newForce *= -1*theBallForceMultiplicator;
+        
+
         Debug.Log("Hit the bat from Ball Collider");
-        Rigidbody rigidball = GetComponent<Rigidbody>();
         Rigidbody rigidbat = other.gameObject.GetComponent<Rigidbody>();
         Debug.Log(rigidbat.velocity);
-        
+        newForce = theBatForceMultiplicator * rigidbat.velocity.magnitude * newForce.normalized + newForce;
+        rigidbody.velocity = newForce;
+
         //rigidball.AddForce(-startForce,ForceMode.Impulse);
-
-      
-
         //var colliderGameObject = other.collider.gameObject;
-       // colliderGameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * 10000f, ForceMode.Impulse);
- 
-        
+        // colliderGameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * 10000f, ForceMode.Impulse);
     }
 
     // Update is called once per frame
