@@ -39,7 +39,7 @@ public class StartBall : MonoBehaviour
         var rigidbat = other.gameObject.GetComponent<Bat>();
         Debug.Log(rigidbat.ObjVelocity+rigidbat.AngVelocity);
         newForce = theBatForceMultiplicator * (rigidbat.ObjVelocity.magnitude+rigidbat.AngVelocity.magnitude)* newForce.normalized + newForce;
-        rigidbody.velocity = newForce;
+        //rigidbody.velocity = newForce; 
         Debug.Log("The force vector is " + newForce + "the magnitude is =" + newForce.magnitude);
         //rigidball.AddForce(-startForce,ForceMode.Impulse);
         //var colliderGameObject = other.collider.gameObject;

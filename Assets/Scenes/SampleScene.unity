@@ -599,7 +599,7 @@ MonoBehaviour:
   onHitEffect: {fileID: 1158316419920580875, guid: f315849b263fe624ca03139cd5cf56b2, type: 3}
   startForce: {x: 110, y: -11, z: 0}
   theBallForceMultiplicator: 1
-  theBatForceMultiplicator: 1
+  theBatForceMultiplicator: 2
 --- !u!54 &645975679
 Rigidbody:
   m_ObjectHideFlags: 0
